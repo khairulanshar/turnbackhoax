@@ -1,0 +1,37 @@
+<ion-modal-view class="menu">
+    <ion-header-bar>
+        <div class="div-btn" ng-show="app.islogin">
+            <a ng-click="closeMenu($event,'/user')" style="cursor:pointer;"><img ng-src="{{app.user.imgurl}}">
+            <div>{{app.user.nama}}</div></a>
+            <button class="button button-clear button-outline icon-right ion-chevron-right" ng-click="logout()">Keluar</button>
+        </div>
+        <div class="div-btn" ng-show="!app.islogin" style="padding:10px;">
+            <img src="icon.png" style="border:0px;">
+            <div>Masuk dengan Facebook untuk melaporkan HOAX!</div>
+            <button class="button button-block button-positive icon-left ion-social-facebook" ng-click="fbLogin()">
+                Log Masuk
+            </button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="has-header" has-bouncing="false" >
+        <ion-list>
+            <a class="item item-icon-left animated-item" ng-click="closeMenu($event,'/home')">
+                <i class="icon ion-home"></i>
+                <span class="item-content">Teras</span>
+            </a>
+            <a class="item item-icon-left animated-item" ng-click="closeMenu($event,'/webresult')">
+                <i class="icon ion-ios-world-outline"></i>
+                <span class="item-content">Statistik Hoax Halaman Web</span>
+            </a>
+            <a class="item item-icon-left animated-item" ng-click="closeMenu($event,'/privasi')">
+                <i class="icon ion-ribbon-b"></i>
+                <span class="item-content">Privasi dan Kebijakan</span>
+            </a>
+            <a class="item item-icon-left animated-item" ng-click="closeMenu($event,'/tentang')">
+                <i class="icon ion-ios-lightbulb-outline"></i>
+                <span class="item-content">Tentang Turn Back Hoax</span>
+            </a>
+        </ion-list>
+    </ion-content>
+
+</ion-modal-view>

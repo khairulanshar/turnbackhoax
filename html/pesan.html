@@ -1,0 +1,64 @@
+<ion-content  scroll="true" has-bouncing="false" class="has-tabs" style="margin-bottom:49px;" delegate-handle="pesan">
+<div class="list" >
+    <div class="card card-stable" ng-show="!app.islogin">
+      <div class="row responsive-sm" >
+          <div class="padding text-center">Masuk dengan Facebook untuk melaporkan HOAX!</div>
+          <div class="text-center"><button class="button button-block button-positive icon-left ion-social-facebook" ng-click="fbLogin()">
+              Log Masuk
+          </button></div>
+      </div>
+    </div>
+
+
+    <div class="card card-stable" ng-show="app.islogin && (!homeapp.issubmitted) && homeapp.createnew">
+      <div class="row responsive-sm" >
+          <h4 >Tuliskan Judul laporan dan Isi pesan</h4>
+          <label class="item item-input item-floating-label" style="border-top:0px;">
+            <span class="input-label">Judul laporan</span>
+            <input type="text" placeholder="Tuliskan judul laporan di sini" ng-model="pesan.url"/>
+          </label>
+          <label class="item item-input item-floating-label" style="border-bottom:1px solid #b2b2b2;">
+            <span class="input-label">Isi Pesan</span>
+            <textarea type="text" rows=2 placeholder="Tuliskan isi pesan di sini" ng-model="pesan.content" style="background-color:transparent;"></textarea>
+          </label>
+          <label class="item item-input item-floating-label" style="border-bottom:1px solid #b2b2b2;">
+            <span class="input-label">Alasan/ Komentar</span>
+            <textarea type="text" rows=2 placeholder="Tuliskan alasan atau komentar anda di sini" ng-model="pesan.komentar" style="background-color:transparent;"></textarea>
+          </label>
+      </div>
+    </div>
+
+    <div class="card card-stable" ng-show="!homeapp.createnew">
+        <div class="item item-text-wrap ">
+            Ada {{homeapp.pesans.length}} laporan.
+        </div>
+    </div>
+
+      <div class="card" ng-repeat="tab in homeapp.pesans" ng-show="!homeapp.createnew" ng-init="checkMyResponse(tab)">
+        <div class="item item-avatar" >
+          <img ng-src="{{tab.user.imgurl}}" style="border-radius:0;">
+          <h2>{{tab.user.nama}}</h2>
+          <p>{{tab.lastupdated}}</p>
+          <h2>{{tab.url.substr(tab.url.indexOf('#')+1)}}</h2>
+        </div>
+        <div class="item item-body">
+            <p parse-url="prop" ng-model="tab.content.content"></p>
+        </div>
+        <div class="card card-calm user-response" ng-show="app.islogin && (!homeapp.issubmitted) && tab.showbox">
+          <div class="row responsive-sm" >
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Alasan Anda</span>
+                <textarea type="text" rows=3 placeholder="Tuliskan Alasan Anda di sini" ng-model="tab.komentar"></textarea>
+              </label>
+          </div>
+          <div class="row">
+                <div class="col col-50"><button ng-click="submitPesan(tab,'nohoax','stream','pesan')" class="button icon-left ion-happy-outline button-full button-balanced button-fnt-20">Bukan Hoax</button></div>
+                <div class="col col-50"><button ng-click="submitPesan(tab,'hoax','stream','pesan')" class="button icon-left ion-sad-outline button-full button-assertive button-fnt-20">Hoax</button></div>
+          </div>
+        </div>
+        <div class="item item-body" style="padding:0px;margin:0px;">
+          <ng-include src="'html/streamvote.html'"></ng-include>
+        </div>
+    </div>
+</div>
+</ion-content>

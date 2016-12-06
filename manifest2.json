@@ -1,0 +1,11 @@
+{
+  "name": "Turn Back Hoax",
+  "short_name": "TBH",
+  "start_url": "popup.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "icon.png",
+    "sizes": "128x128",
+    "type": "image/png"
+  }]
+}

@@ -1,0 +1,23 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">{{vote.title}}</h1>
+      <button class="button button-clear" ng-click="vote.closeModal()">Tutup</button>
+    </ion-header-bar>
+    <ion-content class="vote" has-bouncing="false">
+      <div class="card">
+        <div class="item item-avatar" >
+          <img ng-src="{{trustSrc(vote.tab.favIconUrl)}}" style="border-radius:0;">
+          <h2>{{vote.tab.title || vote.tab.domain}}</h2>
+          <p>{{vote.tab.url || vote.tab.lastupdated}}</p>
+        </div>
+      </div>
+      <div class="list card">
+          <div class="item item-avatar" ng-repeat="vote in vote.data">
+            <img ng-src="{{vote.user.imgurl}}">
+            <a ng-href="{{vote.user.link}}" target="_blank"><h2>{{vote.user.nama}}</h2></a>
+            <p class="subdued">{{vote.lastupdated}}</p>
+            <p style="white-space: normal;">{{vote.komentar}}</p>
+        </div>
+      </div>
+    </ion-content>
+  </ion-modal-view>

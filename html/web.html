@@ -1,0 +1,51 @@
+<ion-content  scroll="true" has-bouncing="false" class="has-tabs" style="margin-bottom:49px;" delegate-handle="web">
+<div class="list" >
+    <div class="card card-stable" ng-show="!app.islogin">
+      <div class="row responsive-sm" >
+          <div class="padding text-center">Masuk dengan Facebook untuk melaporkan HOAX!</div>
+          <div class="text-center"><button class="button button-block button-positive icon-left ion-social-facebook" ng-click="fbLogin()">
+              Log Masuk
+          </button></div>
+      </div>
+    </div>
+    <div class="card card-stable" ng-show="homeapp.tabs.length>1">
+        <div class="item item-text-wrap ">
+            Ada {{homeapp.tabs.length}} tabs di browser anda.
+        </div>
+    </div>
+
+      <div class="card" ng-repeat="tab in homeapp.tabs" ng-init="tabInit(tab,'stream','web')">
+        <div class="item item-avatar" >
+          <img ng-src="{{trustSrc(tab.favIconUrl)}}" style="border-radius:0;">
+          <h2>{{tab.title}}</h2>
+          <p>{{tab.url}}</p>
+        </div>
+
+        <div class="item item-body text-center">
+            <img ng-src="{{trustSrc(tab['og:image'])}}" class="full-image">
+            <div class="col">
+              <button class="button button-block button-hoax" href="javascript:" id="open{{tab.id}}" browseto="{{tab.url}}" tabid="{{tab.id}}" title="{{tab.title}}" style="cursor:pointer;">Buka Tabnya</button>
+            </div>
+            <p class="text-left" parse-url="prop" ng-model="tab.description"></p>
+            <p class="text-left" parse-url="prop" ng-model="tab['og:description']"></p>
+            <p class="text-left" parse-url="prop" ng-model="tab.keywords"></p>
+            <p class="text-left" parse-url="prop" ng-model="tab['og.keywords']"></p>
+        </div>
+        <div class="item item-body  user-response" ng-show="app.islogin && (!homeapp.issubmitted) && tab.showbox">
+          <div class="row responsive-sm" >
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Alasan Anda</span>
+                <textarea type="text" rows=3 placeholder="Tuliskan Alasan Anda di sini" ng-model="tab.komentar"></textarea>
+              </label>
+          </div>
+          <div class="row">
+                <div class="col col-50"><button ng-click="submitStream(tab,'nohoax','stream','web')" class="button icon-left ion-happy-outline button-full button-balanced button-fnt-20">Bukan Hoax</button></div>
+                <div class="col col-50"><button ng-click="submitStream(tab,'hoax','stream','web')" class="button icon-left ion-sad-outline button-full button-assertive button-fnt-20">Hoax</button></div>
+          </div>
+        </div>
+        <div class="item item-body" style="padding:0px;margin:0px;">
+          <ng-include src="'html/streamvote.html'"></ng-include>
+        </div>
+      </div>
+    </div>
+</ion-content>

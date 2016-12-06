@@ -1,0 +1,58 @@
+<script src="js/webresult.js"></script>
+<ion-view>
+    <ion-content scroll="false" class="home has-tabs" has-bouncing="false">
+            <ion-content  scroll="true" has-bouncing="false" class="has-tabs" delegate-handle="web">
+              <div class="row responsive-sm" ng-show="(!filterdata.issubmitted) && filterdata.cariData">
+                    <label class="item item-input item-floating-label" style="border:0px; border-bottom:1px solid #ddd;">
+                      <span class="input-label">Kriteria Pencarian</span>
+                      <input type="text" placeholder="Tuliskan kriteria pencarian di sini" ng-model="filterdata.filter"/>
+                    </label>
+              </div>
+            <div class="list" >
+              <div class="card" ng-repeat="tab in result.domains" ng-show="!filterdata.cariData">
+                <div class="item" >
+                  <h2>{{tab.domain}}</h2>
+                  <p>{{tab.lastupdated}}</p>
+                </div>
+                <div class="item item-body text-center">
+                  <div class="col">
+                    <button class="button button-block button-hoax"  ng-click="openStream(tab)">Ada {{(tab.noartikel || 0)}} Artikel</button>
+                  </div>
+                </div>
+                <div class="item item-body" style="padding:0px;margin:0px;">
+                  <div class="row" style="padding:0px;margin:0px;border-radius:0;">
+                    <div class="col col-50 text-center" style="padding: 0px;margin:20px 0px;border-radius:0;border-right: 1px solid gainsboro;"><button class="button button-block button-clear subdued item-text-wrap" ng-click="vote.openModal(tab,'nohoaxcount','domain')" class="subdued">{{(tab.nohoaxcount || 0)}} vote<br>Bukan Hoax</button></div>
+                    <div class="col col-50 text-center" style="padding: 0px;margin:20px 0px;border-radius:0;"><button class="button button-block button-clear subdued item-text-wrap" ng-click="vote.openModal(tab,'hoaxcount','domain')">{{(tab.hoaxcount||0)}} vote<br>Hoax</button></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card" ng-repeat="tab in result.streams" ng-init="streamInit(tab)">
+                <div class="item item-avatar" >
+                  <img ng-src="{{trustSrc(tab.favIconUrl)}}" style="border-radius:0;">
+                  <h2>{{tab.title}}</h2>
+                  <p>{{tab.url}}</p>
+                </div>
+
+                <div class="item item-body text-center">
+                    <img ng-src="{{trustSrc(tab['og:image'])}}" class="full-image">
+                    <div class="col">
+                      <a class="button button-block button-hoax" href="{{tab.url}}" target="_blank">Buka Artikel</a>
+                    </div>
+                    <p class="text-left" parse-url="prop" ng-model="tab.description"></p>
+                    <p class="text-left" parse-url="prop" ng-model="tab['og:description']"></p>
+                    <p class="text-left" parse-url="prop" ng-model="tab.keywords"></p>
+                    <p class="text-left" parse-url="prop" ng-model="tab['og.keywords']"></p>
+                </div>
+                <div class="item item-body" style="padding:0px;margin:0px;">
+                  <ng-include src="'html/streamvote.html'"></ng-include>
+                </div>
+              </div>
+            </div>
+            </ion-content>
+            <div class="tabs tabs-positive">
+                <button class="button button-small button-block button-stable" ng-click="setCari();" ng-show="!filterdata.cariData">Cari Data</button>
+                <button class="button button-small button-block button-stable" ng-show="filterdata.cariData" ng-click="batalCari()">Batalkan</button>
+                <button class="button button-small icon-left ion-search  button-block button-balanced" ng-show="filterdata.cariData" ng-click="filterStreams('stream','web',1000,0,'-lastupdated')">Cari</button>
+            </div>
+    </ion-content>
+</ion-view>

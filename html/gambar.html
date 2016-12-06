@@ -1,0 +1,72 @@
+<ion-content  scroll="true" has-bouncing="false" class="has-tabs" style="margin-bottom:49px;" delegate-handle="gambar">
+<div class="list" >
+    <div class="card card-stable" ng-show="!app.islogin">
+      <div class="row responsive-sm" >
+          <div class="padding text-center">Masuk dengan Facebook untuk melaporkan HOAX!</div>
+          <div class="text-center"><button class="button button-block button-positive icon-left ion-social-facebook" ng-click="fbLogin()">
+              Log Masuk
+          </button></div>
+      </div>
+    </div>
+
+
+    <div class="card card-stable" ng-show="app.islogin && (!homeapp.issubmitted) && homeapp.createnewgambar">
+      <div class="row responsive-sm" >
+          <h4 >Tuliskan Judul laporan dan Isi pesan</h4>
+          <label class="item item-input item-floating-label" style="border-top:0px;">
+            <span class="input-label">Judul laporan</span>
+            <input type="text" placeholder="Tuliskan judul laporan di sini" ng-model="gambar.url"/>
+          </label>
+          <label class="item item-input item-floating-label" style="border-bottom:1px solid #b2b2b2;">
+            <button for="photo" class="button button-light icon-left ion-camera" ng-click="openfile($event)" style="background-color:transparent;padding:0px;"></button>
+            <div style="display: inline-block;padding-top:10px;">{{homeapp.filegambar.filename}}</div>
+            <div id="forfile" style="display:none;"></div>
+            <div ng-show="homeapp.filegambar.filename.length>0">
+              <img ng-src="{{homeapp.filegambar.photosrc}}" class="full-image">
+            </div>
+          </label>
+          <label class="item item-text-wrap" style="font-size:10px;color:#555;padding: 1px;margin-bottom:10px;margin-top: 3px;border:0px;">Dengan mengunggah file ini, Anda menyatakan bahwa gambar ini bukanlah pornografi</label>
+          <label class="item item-input item-floating-label" style="border:0px;border-bottom:1px solid #b2b2b2;">
+            <span class="input-label">Alasan/ Komentar</span>
+            <textarea type="text" rows=2 placeholder="Tuliskan alasan atau komentar anda di sini" ng-model="gambar.komentar" style="background-color:transparent;"></textarea>
+          </label>
+      </div>
+    </div>
+
+    <div class="card card-stable" ng-show="!homeapp.createnewgambar">
+        <div class="item item-text-wrap ">
+            Ada {{homeapp.gambars.length}} laporan.
+        </div>
+    </div>
+
+      <div class="card" ng-repeat="tab in homeapp.gambars" ng-show="!homeapp.createnewgambar" ng-init="checkMyResponse(tab)">
+        <div class="item item-avatar" >
+          <img ng-src="{{tab.user.imgurl}}" style="border-radius:0;">
+          <h2>{{tab.user.nama}}</h2>
+          <p>{{tab.lastupdated}}</p>
+          <h2>{{tab.url.substr(tab.url.indexOf('#')+1)}}</h2>
+        </div>
+        <div class="item item-body text-center">
+            <div class="col">
+              <a class="button button-block button-hoax" ng-href="https://www.google.com/searchbyimage?image_url={{tab.content.content}}" target="_blank">Lihat Google Reverse Image</a>
+            </div>
+            <img ng-src="{{tab.content.content}}" style="width:100%;">
+        </div>
+        <div class="card card-calm user-response" ng-show="app.islogin && (!homeapp.issubmitted) && tab.showbox">
+          <div class="row responsive-sm" >
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Alasan Anda</span>
+                <textarea type="text" rows=3 placeholder="Tuliskan Alasan Anda di sini" ng-model="tab.komentar"></textarea>
+              </label>
+          </div>
+          <div class="row">
+                <div class="col col-50"><button ng-click="submitGambar(tab,'nohoax','stream','gambar')" class="button icon-left ion-happy-outline button-full button-balanced button-fnt-20">Bukan Hoax</button></div>
+                <div class="col col-50"><button ng-click="submitGambar(tab,'hoax','stream','gambar')" class="button icon-left ion-sad-outline button-full button-assertive button-fnt-20">Hoax</button></div>
+          </div>
+        </div>
+        <div class="item item-body" style="padding:0px;margin:0px;">
+          <ng-include src="'html/streamvote.html'"></ng-include>
+        </div>
+    </div>
+</div>
+</ion-content>

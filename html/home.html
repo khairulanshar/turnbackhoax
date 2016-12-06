@@ -1,0 +1,32 @@
+<script src="js/home.js"></script>
+<ion-view>
+    <ion-content scroll="false" class="home has-tabs" has-bouncing="false">
+        <ion-slide-box slide-tabs-scrollable="false"  show-pager="false" ion-slide-tabs delegate-handle="homeslide" on-slide-changed="onSlideChange($index,onSlideChange_);">
+            <ion-slide ion-slide-tab-label="Halaman Web" >
+              <ng-include src="'html/web.html'"></ng-include>
+            </ion-slide>
+            <ion-slide ion-slide-tab-label="Pesan Berantai">
+              <ng-include src="'html/pesan.html'"></ng-include>
+            </ion-slide>
+            <ion-slide ion-slide-tab-label="Gambar">
+              <ng-include src="'html/gambar.html'"></ng-include>
+            </ion-slide>
+        </ion-slide-box>
+        <div class="tabs tabs-striped tabs-positive" ng-show="homeapp.showtab==0">
+            <div class="tab-item" ng-click="setTab($event, 'selected')" ng-class="{selected:(homeapp.tabselected == 'selected')}">Tab Aktif</div>
+            <div class="tab-item" ng-click="setTab($event, 'all')" ng-class="{selected:(homeapp.tabselected == 'all')}">Semua Tab</div>
+        </div>
+        <div class="tabs tabs-striped tabs-positive" ng-show="homeapp.showtab==1">
+            <button class="button icon-left ion-sad-outline button-small button-block button-assertive" ng-show="app.islogin && (!homeapp.issubmitted) && (!homeapp.createnew)" ng-click="laporkanpesan()">Laporkan Hoax Baru Pesan Berantai!</button>
+            <button class="button button-small button-block button-stable" ng-show="homeapp.createnew" ng-click="homeapp.createnew=false">Batalkan</button>
+            <button ng-click="creatStreamPesan()" class="button button-small icon-left ion-android-checkmark-circle  button-block button-assertive" ng-show="homeapp.createnew">Laporkan</button>
+        </div>
+        <div class="tabs tabs-striped tabs-positive" ng-show="homeapp.showtab==2">
+            <button class="button icon-left ion-sad-outline button-small button-block button-assertive" ng-show="app.islogin && (!homeapp.issubmitted) && (!homeapp.createnewgambar)" ng-click="laporkangambar()">Laporkan Hoax Baru Gambar!</button>
+            <button class="button button-small button-block button-stable" ng-show="homeapp.createnewgambar" ng-click="homeapp.createnewgambar=false">Batalkan</button>
+            <button ng-click="creatStreamGambar()" class="button button-small icon-left ion-android-checkmark-circle  button-block button-assertive" ng-show="homeapp.createnewgambar">Laporkan</button>
+        </div>
+    </ion-content>
+
+
+</ion-view>

@@ -1,0 +1,38 @@
+<script src="js/user.js"></script>
+<ion-view ng-init="initUser()">
+    <ion-content class="user" scroll="true" has-bouncing="false" ng-show="app.islogin" style="margin-bottom:49px;">
+            <div class="item item-thumbnail-left">
+                <img ng-src="{{app.user.imgurl}}">
+                <h2>{{app.user.nama}}</h2>
+                <p>Terakhir Login: {{app.user.lastlogin}} WIB</p>
+                <p parse-url="prop" ng-model="app.user.link"></p>
+            </div>
+            <div class="card" ng-repeat="useragent in app.user_detail.useragent">
+              <div class="item item-text-wrap">
+                {{useragent}}
+              </div>
+            </div>
+            <div class="list card" ng-repeat="(key, value) in app.user_detail.location" ng-init="initValue(value)">
+              <label class="item ">
+                IP Address: <span class="item-note">{{key}}</span>
+              </label>
+              <label class="item ">
+                Kota: <span class="item-note">{{value.city}}</span>
+              </label>
+              <label class="item ">
+                Kode Negara: <span class="item-note">{{value.country_code}}</span>
+              </label>
+              <label class="item ">
+                Nama Negara: <span class="item-note">{{value.country_name}}</span>
+              </label>
+              <label class="item ">
+                Latitude: <span class="item-note">{{value.latitude}}</span>
+              </label>
+              <label class="item ">
+                Longitude: <span class="item-note">{{value.longitude}}</span>
+              </label>
+              <img ng-src="{{value.urlimg}}" style="width:100%;">
+            </div>
+
+    </ion-content>
+</ion-view>
